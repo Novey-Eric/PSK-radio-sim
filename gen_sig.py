@@ -3,7 +3,17 @@ import matplotlib.pyplot as plt
 
 class sig_gen():
 
+	def add_noise(self, sig, noise_amp):
+		noise = np.random.normal(0, noise_amp, len(sig))
+		return np.add(sig, noise)
 	
+	def add_conv(self, sig):
+		
+		return sig
+
+	def add_echo(self, sig, n_echos):
+		return sig
+
 	def get_lts(self, osr, cp = False):
 		lts = np.array([0,1,-1,1,1,0,0,-1,0,1,1,0,0,0,1,-1,1,1,0,0,1,1,0,-1,0,1,0,0,0,1,1,-1,0,1,0,0,0,1,-1,1,1,0,0,1,0,0,-1,-1,1,1,0,1,0,0,-1,1,-1,0,0,0,-1,-1,1,1])
 		#lts_ift = np.fft.ifftshift(np.fft.ifft(lts, n = 64*osr))
@@ -66,7 +76,7 @@ class sig_gen():
 	
 	def create_signal(self, osr):
 		#send_bits = np.random.randint(0, high = 2, size = 70)
-		send_bits = np.array([1]*48)
+		send_bits = np.array([0,1,1,1,0,0,1,0,1,0,0,0,0,1,0,1,1,1,0,0,1,1,0,0,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,1,0,0,0,1])
 		bp_bits = self.mod_bpsk(send_bits)
 		send_sig = self.frame_all(bp_bits, osr)
 		#print(len(send_sig))
